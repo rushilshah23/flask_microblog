@@ -7,6 +7,8 @@ import sqlalchemy as sa
 import sqlalchemy.orm as so
 from app import db, app, login
 
+
+# UserMixin class provides methods like is_authentictaed, is_active, get_id with generic default implementation
 class User(UserMixin, db.Model):
     id:so.Mapped[int] = so.mapped_column(primary_key=True)
     username: so.Mapped[str] = so.mapped_column(sa.String(64), index=True, unique=True)
@@ -41,6 +43,7 @@ class Post(db.Model):
         return '<Post {}'.format(self.body)
 
 
+# gets the user from the database and loads it into user_loader
 @login.user_loader
 def load_user(id):
     return db.session.get(User, int(id))
@@ -67,7 +70,7 @@ def truncate_table(model):
     db.session.commit()
 
 
-
+# declare imports to be available in flask shell
 @app.shell_context_processor
 def make_shell_context():
     return {'sa':sa,'so':so,'db':db, 'User':User, 'Post':Post, 'truncate_table':truncate_table}
