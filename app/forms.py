@@ -42,8 +42,10 @@ class EditProfileForm(FlaskForm):
         self.original_username = original_username
     
     def validate_username(self,username):
-        if username.data != self.username:
+        if username.data != self.original_username:
             user = db.session.scalar(sa.select(User).where(User.username == username.data))
             if user is not None:
                 raise ValidationError('The username already exists. Please use a different username !')
-                
+
+class EmptyForm(FlaskForm):
+    submit = SubmitField('Submit')
