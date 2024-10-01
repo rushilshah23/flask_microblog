@@ -6,6 +6,7 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_mail import Mail
 
 
 # declare main flask app
@@ -26,6 +27,7 @@ login = LoginManager(app)
 # redirect unauthenticated user to this route
 login.login_view = 'login'
 
+mail = Mail(app)
 
 if not app.debug:
 
