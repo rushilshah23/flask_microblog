@@ -7,10 +7,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
-
+from flask_moment import Moment
 
 # declare main flask app
 app = Flask(__name__)
+
+
 
 # setting config of the app
 app.config.from_object(Config)
@@ -28,6 +30,10 @@ login = LoginManager(app)
 login.login_view = 'login'
 
 mail = Mail(app)
+
+# For managing timezones in the client side by providing js script
+moment = Moment(app)
+
 
 if not app.debug:
 
